@@ -1,13 +1,13 @@
-package com.example;
+package com.entity_logger;
 
 import net.runelite.client.RuneLite;
 import net.runelite.client.externalplugins.ExternalPluginManager;
 
-public class ExamplePluginTest
+public class EntityLoggerTest
 {
 	public static void main(String[] args) throws Exception
 	{
-		ExternalPluginManager.loadBuiltin(ExamplePlugin.class);
+		ExternalPluginManager.loadBuiltin(EntityLoggerPlugin.class);
 		RuneLite.main(args);
 	}
 }
