@@ -42,6 +42,11 @@ public class EntityLoggerPlugin extends Plugin
 		if (gameStateChanged.getGameState() == GameState.LOGGED_IN)
 		{
 			client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", "Example says " + config.greeting(), null);
+			// TODO: Clean this all up, this is all for debugging
+			for (EntityStates state : EntityStates.values()){
+				client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", "Example says " + config.greeting(), null);
+				client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", state.toString(), null);
+			}
 		}
 	}
 
