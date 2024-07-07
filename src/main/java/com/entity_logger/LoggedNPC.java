@@ -14,7 +14,5 @@ public class LoggedNPC {
         // TODO: Implement actual logic here instead of picking randomly
         this.npc = npc;
         this.state = EntityStates.testRandomState();
-        System.out.println(npc);
-        System.out.println(this.state);
     }
 }

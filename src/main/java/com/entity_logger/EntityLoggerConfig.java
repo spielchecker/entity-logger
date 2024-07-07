@@ -21,271 +21,95 @@ public interface EntityLoggerConfig extends Config
 	String entityHighlightSettings = "Entity Highlight Settings";
 
 	@ConfigItem(
-			keyName = "toggleHighlightInscopeHull",
-			name = "Highlight in-scope entities by hull",
-			description = "Toggle whether in-scope entities will be highlighted by hull",
+			keyName = "inscopeHighlightMethod",
+			name = "In-scope highlighting method",
+			description = "In-scope highlighting method",
 			section = entityHighlightSettings,
 			position = 0
 	)
-	default boolean toggleHighlightInscopeHull()
+	default HighlightMethod inscopeHighlightMethod()
 	{
-		return false;
+		return HighlightMethod.NONE;
 	}
 	@ConfigItem(
-			keyName = "highlightInscopeHullColor",
-			name = "Color to highlight in-scope entities by hull",
-			description = "Which color to highlight in-scope entities by hull",
+			keyName = "inscopeHighlightColor",
+			name = "Color to highlight in-scope entities with",
+			description = "Which color to highlight in-scope entities with",
 			section = entityHighlightSettings,
 			position = 1
 	)
-	default Color highlightInscopeHullColor()
+	default Color inscopeHighlightColor()
 	{
-		return new Color(0xFFFFFF00);
+		return new Color(0xFFFF00);
 	}
+
 	@ConfigItem(
-			keyName = "highlightInscopeHullInteriorColor",
-			name = "Color to highlight in-scope entities by hull interior",
-			description = "Which color to highlight in-scope entities by hull interior",
+			keyName = "outofscopeHighlightMethod",
+			name = "Out-of-scope highlighting method",
+			description = "Out-of-scope highlighting method",
 			section = entityHighlightSettings,
 			position = 2
 	)
-	default Color highlightInscopeHullInteriorColor()
+	default HighlightMethod outofscopeHighlightMethod()
 	{
-		return new Color(0x1FFFFF00);
+		return HighlightMethod.NONE;
 	}
 	@ConfigItem(
-			keyName = "toggleHighlightInscopeOutline",
-			name = "Highlight in-scope entities by outline",
-			description = "Toggle whether in-scope entities will be highlighted by outline",
+			keyName = "outofscopeHighlightColor",
+			name = "Color to highlight out-of-scope entities with",
+			description = "Which color to highlight out-of-scope entities with",
 			section = entityHighlightSettings,
 			position = 3
 	)
-	default boolean toggleHighlightInscopeOutline()
+	default Color outofscopeHighlightColor()
 	{
-		return true;
+		return new Color(0xFF00FF);
 	}
+
 	@ConfigItem(
-			keyName = "highlightInscopeOutlineColor",
-			name = "Color to highlight in-scope entities by outline",
-			description = "Which color to highlight in-scope entities by outline",
+			keyName = "backloggedHighlightMethod",
+			name = "Backlogged highlighting method",
+			description = "Backlogged highlighting method",
 			section = entityHighlightSettings,
 			position = 4
 	)
-	default Color highlightInscopeOutlineColor()
+	default HighlightMethod backloggedHighlightMethod()
 	{
-		return new Color(0xFFFFFF00);
+		return HighlightMethod.NONE;
 	}
 	@ConfigItem(
-			keyName = "highlightInscopeOutlineInteriorColor",
-			name = "Color to highlight in-scope entities by outline interior",
-			description = "Which color to highlight in-scope entities by outline interior",
+			keyName = "backloggedHighlightColor",
+			name = "Color to highlight backlogged entities with",
+			description = "Which color to highlight backlogged entities with",
 			section = entityHighlightSettings,
 			position = 5
 	)
-	default Color highlightInscopeOutlineInteriorColor()
+	default Color backloggedHighlightColor()
 	{
-		return new Color(0x1FFFFF00);
+		return new Color(0xFF0000);
 	}
 
 	@ConfigItem(
-			keyName = "toggleHighlightBackloggedHull",
-			name = "Highlight backlogged entities by hull",
-			description = "Toggle whether backlogged entities will be highlighted by hull",
+			keyName = "finishedHighlightMethod",
+			name = "Finished highlighting method",
+			description = "Finished highlighting method",
 			section = entityHighlightSettings,
 			position = 6
 	)
-	default boolean toggleHighlightBackloggedHull()
+	default HighlightMethod finishedHighlightMethod()
 	{
-		return false;
+		return HighlightMethod.NONE;
 	}
 	@ConfigItem(
-			keyName = "highlightBackloggedHullColor",
-			name = "Color to highlight backlogged entities by hull",
-			description = "Which color to highlight backlogged entities by hull",
+			keyName = "finishedHighlightColor",
+			name = "Color to highlight finished entities with",
+			description = "Which color to highlight finished entities with",
 			section = entityHighlightSettings,
 			position = 7
 	)
-	default Color highlightBackloggedHullColor()
+	default Color finishedHighlightColor()
 	{
-		return new Color(0xFFFF0000);
-	}
-	@ConfigItem(
-			keyName = "highlightBackloggedHullInteriorColor",
-			name = "Color to highlight backlogged entities by hull interior",
-			description = "Which color to highlight backlogged entities by hull interior",
-			section = entityHighlightSettings,
-			position = 8
-	)
-	default Color highlightBackloggedHullInteriorColor()
-	{
-		return new Color(0x1FFF0000);
-	}
-	@ConfigItem(
-			keyName = "toggleHighlightBackloggedOutline",
-			name = "Highlight backlogged entities by outline",
-			description = "Toggle whether backlogged entities will be highlighted by outline",
-			section = entityHighlightSettings,
-			position = 9
-	)
-	default boolean toggleHighlightBackloggedOutline()
-	{
-		return true;
-	}
-	@ConfigItem(
-			keyName = "highlightBackloggedOutlineColor",
-			name = "Color to highlight backlogged entities by outline",
-			description = "Which color to highlight backlogged entities by outline",
-			section = entityHighlightSettings,
-			position = 10
-	)
-	default Color highlightBackloggedOutlineColor()
-	{
-		return new Color(0xFFFF0000);
-	}
-	@ConfigItem(
-			keyName = "highlightBackloggedOutlineInteriorColor",
-			name = "Color to highlight backlogged entities by outline interior",
-			description = "Which color to highlight backlogged entities by outline interior",
-			section = entityHighlightSettings,
-			position = 11
-	)
-	default Color highlightBackloggedOutlineInteriorColor()
-	{
-		return new Color(0x1FFF0000);
-	}
-
-	@ConfigItem(
-			keyName = "toggleHighlightOutofscopeHull",
-			name = "Highlight out-of-scope entities by hull",
-			description = "Toggle whether out-of-scope entities will be highlighted by hull",
-			section = entityHighlightSettings,
-			position = 12
-	)
-	default boolean toggleHighlightOutofscopeHull()
-	{
-		return false;
-	}
-	@ConfigItem(
-			keyName = "highlightOutofscopeHullColor",
-			name = "Color to highlight out-of-scope entities by hull",
-			description = "Which color to highlight out-of-scope entities by hull",
-			section = entityHighlightSettings,
-			position = 13
-	)
-	default Color highlightOutofscopeHullColor()
-	{
-		return new Color(0xFFFF00FF);
-	}
-	@ConfigItem(
-			keyName = "highlightOutofscopeHullInteriorColor",
-			name = "Color to highlight out-of-scope entities by hull interior",
-			description = "Which color to highlight out-of-scope entities by hull interior",
-			section = entityHighlightSettings,
-			position = 14
-	)
-	default Color highlightOutofscopeHullInteriorColor()
-	{
-		return new Color(0x1FFF00FF);
-	}
-	@ConfigItem(
-			keyName = "toggleHighlightOutofscopeOutline",
-			name = "Highlight out-of-scope entities by outline",
-			description = "Toggle whether out-of-scope entities will be highlighted by outline",
-			section = entityHighlightSettings,
-			position = 15
-	)
-	default boolean toggleHighlightOutofscopeOutline()
-	{
-		return true;
-	}
-	@ConfigItem(
-			keyName = "highlightOutofscopeOutlineColor",
-			name = "Color to highlight out-of-scope entities by outline",
-			description = "Which color to highlight out-of-scope entities by outline",
-			section = entityHighlightSettings,
-			position = 16
-	)
-	default Color highlightOutofscopeOutlineColor()
-	{
-		return new Color(0xFFFF00FF);
-	}
-	@ConfigItem(
-			keyName = "highlightOutofscopeOutlineInteriorColor",
-			name = "Color to highlight out-of-scope entities by outline interior",
-			description = "Which color to highlight out-of-scope entities by outline interior",
-			section = entityHighlightSettings,
-			position = 17
-	)
-	default Color highlightOutofscopeOutlineInteriorColor()
-	{
-		return new Color(0x1FFF00FF);
-	}
-
-	@ConfigItem(
-			keyName = "toggleHighlightFinishedHull",
-			name = "Highlight finished entities by hull",
-			description = "Toggle whether finished entities will be highlighted by hull",
-			section = entityHighlightSettings,
-			position = 18
-	)
-	default boolean toggleHighlightFinishedHull()
-	{
-		return false;
-	}
-	@ConfigItem(
-			keyName = "highlightFinishedHullColor",
-			name = "Color to highlight finished entities by hull",
-			description = "Which color to highlight finished entities by hull",
-			section = entityHighlightSettings,
-			position = 19
-	)
-	default Color highlightFinishedHullColor()
-	{
-		return new Color(0xFF00FF00);
-	}
-	@ConfigItem(
-			keyName = "highlightFinishedHullInteriorColor",
-			name = "Color to highlight finished entities by hull interior",
-			description = "Which color to highlight finished entities by hull interior",
-			section = entityHighlightSettings,
-			position = 20
-	)
-	default Color highlightFinishedHullInteriorColor()
-	{
-		return new Color(0x1F00FF00);
-	}
-	@ConfigItem(
-			keyName = "toggleHighlightFinishedOutline",
-			name = "Highlight finished entities by outline",
-			description = "Toggle whether finished entities will be highlighted by outline",
-			section = entityHighlightSettings,
-			position = 21
-	)
-	default boolean toggleHighlightFinishedOutline()
-	{
-		return true;
-	}
-	@ConfigItem(
-			keyName = "highlightFinishedOutlineColor",
-			name = "Color to highlight finished entities by outline",
-			description = "Which color to highlight finished entities by outline",
-			section = entityHighlightSettings,
-			position = 22
-	)
-	default Color highlightFinishedOutlineColor()
-	{
-		return new Color(0xFF00FF00);
-	}
-	@ConfigItem(
-			keyName = "highlightFinishedOutlineInteriorColor",
-			name = "Color to highlight finished entities by outline interior",
-			description = "Which color to highlight finished entities by outline interior",
-			section = entityHighlightSettings,
-			position = 23
-	)
-	default Color highlightFinishedOutlineInteriorColor()
-	{
-		return new Color(0x1F00FF00);
+		return new Color(0x00FF00);
 	}
 
 	////////////////////////////////////////////////////////////////

@@ -2,7 +2,6 @@ package com.entity_logger;
 
 import com.google.inject.Provides;
 import javax.inject.Inject;
-import javax.swing.text.html.parser.Entity;
 
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.ChatMessageType;
@@ -66,15 +65,13 @@ public class EntityLoggerPlugin extends Plugin
 	@Subscribe
 	public void onGameTick(GameTick gameTick)
 	{
-		client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", "Game tick!", null);
-		client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", "Scanning with range " + config.scanRadius(), null);
 		LocalPoint currentPosition = client.getLocalPlayer().getLocalLocation();
+		// Get all NPCs in range and update the highlighter
 		List<NPC> npcList = client.getNpcs()
 				.stream()
 				.filter(npc -> (npc.getLocalLocation().distanceTo(currentPosition) / 128) <= config.scanRadius())
 				.collect(Collectors.toList());
 		this.entityHighlighter.updateNPCList(npcList);
-		this.entityHighlighter.applyHighlight(client);
 	}
 
 	@Provides

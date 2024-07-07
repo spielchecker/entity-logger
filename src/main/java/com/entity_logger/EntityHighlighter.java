@@ -5,7 +5,6 @@ import net.runelite.api.Client;
 import net.runelite.api.NPC;
 import net.runelite.client.ui.overlay.Overlay;
 import net.runelite.client.ui.overlay.OverlayLayer;
-import net.runelite.client.ui.overlay.OverlayManager;
 import net.runelite.client.ui.overlay.OverlayPosition;
 import net.runelite.client.ui.overlay.outline.ModelOutlineRenderer;
 
@@ -44,19 +43,52 @@ public class EntityHighlighter extends Overlay {
 
     public Dimension render(Graphics2D graphics)
     {
+        HighlightMethod highlightMethod = null;
+        HighlightMethod.OutlineType outlineType;
+        HighlightMethod.FillType fillType;
+        Color color = null;
         for (LoggedNPC npc : this.npcs) {
-            this.modelOutlineRenderer.drawOutline(npc.npc, 4, this.config.highlightInscopeOutlineColor(), 2);
+            switch (npc.state) {
+                case IN_SCOPE:
+                    highlightMethod = config.inscopeHighlightMethod();
+                    color = config.inscopeHighlightColor();
+                    break;
+                case OUT_OF_SCOPE:
+                    highlightMethod = config.outofscopeHighlightMethod();
+                    color = config.outofscopeHighlightColor();
+                    break;
+                case BACKLOGGED:
+                    highlightMethod = config.backloggedHighlightMethod();
+                    color = config.backloggedHighlightColor();
+                    break;
+                case FINISHED:
+                    highlightMethod = config.finishedHighlightMethod();
+                    color = config.finishedHighlightColor();
+            }
+            if (highlightMethod != null)
+            {
+                outlineType = highlightMethod.outlineType;
+                switch (outlineType) {
+                    case NONE:
+                        break;  // do nothing
+                    case OUTLINE:
+                        this.modelOutlineRenderer.drawOutline(npc.npc, 4, color, 4);
+                        break;
+                    case HULL:
+                        drawHull(graphics, npc.npc.getConvexHull(), highlightMethod, color);
+                }
+            }
         }
         return null;
     }
 
-    public void applyHighlight(Client client)
+    private void drawHull(Graphics2D graphics, Shape hull, HighlightMethod highlightMethod, Color color)
     {
-        client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", "Starting to apply highlight", null);
-        for (LoggedNPC npc : this.npcs) {
-            String npc_msg = npc.npc.getName() + " is in state " + npc.state.description;
-            System.out.println(npc_msg);
-            client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", npc_msg, null);
-        }
+        Color fillColor = new Color(color.getRed(), color.getGreen(), color.getBlue(), highlightMethod.fillType.alpha);
+        graphics.setColor(color);
+        graphics.setStroke(new BasicStroke(4));
+        graphics.draw(hull);
+        graphics.setColor(fillColor);
+        graphics.fill(hull);
     }
 }
