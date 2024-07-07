@@ -2,15 +2,24 @@ package com.entity_logger;
 
 import com.google.inject.Provides;
 import javax.inject.Inject;
+import javax.swing.text.html.parser.Entity;
+
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.ChatMessageType;
 import net.runelite.api.Client;
 import net.runelite.api.GameState;
+import net.runelite.api.NPC;
+import net.runelite.api.coords.LocalPoint;
 import net.runelite.api.events.GameStateChanged;
+import net.runelite.api.events.GameTick;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
+import net.runelite.client.ui.overlay.OverlayManager;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @PluginDescriptor(
@@ -23,11 +32,16 @@ public class EntityLoggerPlugin extends Plugin
 
 	@Inject
 	private EntityLoggerConfig config;
+	@Inject
+	private EntityHighlighter entityHighlighter;
+	@Inject
+	private OverlayManager overlayManager;
 
 	@Override
 	protected void startUp() throws Exception
 	{
-		log.info("Example started!");
+		this.overlayManager.add(entityHighlighter);
+		log.info("Entity logger started!");
 	}
 
 	@Override
@@ -44,10 +58,23 @@ public class EntityLoggerPlugin extends Plugin
 			client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", "Example says " + config.greeting(), null);
 			// TODO: Clean this all up, this is all for debugging
 			for (EntityStates state : EntityStates.values()){
-				client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", "Example says " + config.greeting(), null);
 				client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", state.toString(), null);
 			}
 		}
+	}
+
+	@Subscribe
+	public void onGameTick(GameTick gameTick)
+	{
+		client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", "Game tick!", null);
+		client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", "Scanning with range " + config.scanRadius(), null);
+		LocalPoint currentPosition = client.getLocalPlayer().getLocalLocation();
+		List<NPC> npcList = client.getNpcs()
+				.stream()
+				.filter(npc -> (npc.getLocalLocation().distanceTo(currentPosition) / 128) <= config.scanRadius())
+				.collect(Collectors.toList());
+		this.entityHighlighter.updateNPCList(npcList);
+		this.entityHighlighter.applyHighlight(client);
 	}
 
 	@Provides

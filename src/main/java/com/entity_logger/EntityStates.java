@@ -1,5 +1,7 @@
 package com.entity_logger;
 
+import java.util.Random;
+
 public enum EntityStates {
 
     UNINTERACTABLE ("This entity has no methods of interaction."),
@@ -13,5 +15,13 @@ public enum EntityStates {
 
     EntityStates(String description){
         this.description = description;
+    }
+
+    // TODO: These are for testing, remove them later
+    private static final EntityStates[] VALUES = values();
+    private static final int SIZE = VALUES.length;
+    private static final Random RANDOM = new Random();
+    public static EntityStates testRandomState(){
+        return VALUES[RANDOM.nextInt(SIZE)];
     }
 }
